@@ -502,11 +502,14 @@
         
         .payment-section {
             display: none;
-            animation: fadeUp 0.5s ease;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
         
         .payment-section.show {
             display: block;
+            opacity: 1;
+            animation: fadeUp 0.5s ease forwards;
         }
 
         .qr-code-container {
@@ -615,21 +618,29 @@
 
         .hidden {
             display: none !important;
+            opacity: 0 !important;
+        }
+        
+        .visible {
+            display: block !important;
+            opacity: 1 !important;
         }
 
         .success-message {
             display: none;
+            opacity: 0;
             background: rgba(201, 169, 97, 0.1);
             border: 3px solid var(--color-gold);
             padding: 50px 40px;
             text-align: center;
             border-radius: 8px;
             margin-top: 30px;
-            animation: fadeUp 0.5s ease;
+            transition: opacity 0.5s ease;
         }
         
         .success-message.show {
             display: block;
+            animation: fadeUp 0.5s ease forwards;
         }
         
         .success-message h3 {
@@ -930,14 +941,32 @@
             paymentAmount = selectedTicketType === 'couple' ? '1000' : '650';
             document.getElementById('paymentAmount').textContent = paymentAmount;
             
-            // Hide booking form and show payment section
-            document.getElementById('bookingFormCard').classList.add('hidden');
-            document.getElementById('paymentSection').classList.add('show');
+            // Hide booking form
+            const bookingCard = document.getElementById('bookingFormCard');
+            bookingCard.style.opacity = '0';
+            bookingCard.style.transition = 'opacity 0.3s ease';
             
-            // Scroll to payment section
             setTimeout(() => {
-                document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
+                bookingCard.classList.add('hidden');
+                
+                // Show payment section
+                const paymentSection = document.getElementById('paymentSection');
+                paymentSection.classList.add('show');
+                paymentSection.style.display = 'block';
+                
+                // Force a reflow
+                void paymentSection.offsetHeight;
+                
+                // Trigger animation
+                setTimeout(() => {
+                    paymentSection.style.opacity = '1';
+                }, 50);
+                
+                // Scroll to payment section
+                setTimeout(() => {
+                    paymentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 150);
+            }, 300);
         });
         
         // Handle WhatsApp button click
@@ -961,9 +990,29 @@
             
             // Show success message after short delay
             setTimeout(() => {
-                document.getElementById('paymentSection').classList.remove('show');
-                document.getElementById('successMessage').classList.add('show');
-                document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                const paymentSection = document.getElementById('paymentSection');
+                const successMessage = document.getElementById('successMessage');
+                
+                // Hide payment section
+                paymentSection.style.opacity = '0';
+                
+                setTimeout(() => {
+                    paymentSection.classList.remove('show');
+                    paymentSection.style.display = 'none';
+                    
+                    // Show success message
+                    successMessage.classList.add('show');
+                    successMessage.style.display = 'block';
+                    
+                    // Force reflow
+                    void successMessage.offsetHeight;
+                    
+                    // Trigger animation
+                    setTimeout(() => {
+                        successMessage.style.opacity = '1';
+                        successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 50);
+                }, 300);
             }, 1500);
         });
         
