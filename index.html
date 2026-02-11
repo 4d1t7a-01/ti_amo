@@ -352,14 +352,6 @@
             height: 0;
         }
         
-        .ticket-option input[type="radio"]:checked + .ticket-content {
-            border-color: var(--color-gold);
-        }
-        
-        .ticket-option input[type="radio"]:checked ~ * {
-            opacity: 1;
-        }
-        
         .ticket-option.selected {
             border-color: var(--color-gold);
             background: rgba(201, 169, 97, 0.1);
@@ -437,6 +429,15 @@
         .submit-btn:active {
             transform: translateY(0);
         }
+
+        .whatsapp-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+        }
+
+        .whatsapp-btn:hover {
+            box-shadow: 0 12px 35px rgba(37, 211, 102, 0.4);
+        }
         
         footer {
             text-align: center;
@@ -499,32 +500,94 @@
             }
         }
         
-        .success-message {
+        .payment-section {
             display: none;
-            background: rgba(201, 169, 97, 0.1);
-            border: 2px solid var(--color-gold);
-            padding: 30px;
-            text-align: center;
-            border-radius: 2px;
-            margin-top: 30px;
             animation: fadeUp 0.5s ease;
         }
         
-        .success-message.show {
+        .payment-section.show {
             display: block;
         }
-        
-        .success-message h3 {
-            font-family: var(--font-display);
-            font-size: 2rem;
-            color: var(--color-gold);
-            margin-bottom: 15px;
+
+        .qr-code-container {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border: 3px solid var(--color-gold);
+            border-radius: 8px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
-        
-        .success-message p {
-            font-size: 1rem;
+
+        .qr-code-img {
+            max-width: 280px;
+            width: 100%;
+            height: auto;
+            margin: 20px auto;
+            display: block;
+            border: 2px solid #f0f0f0;
+            border-radius: 8px;
+            padding: 10px;
+            background: white;
+        }
+
+        .payment-details {
+            margin: 25px 0;
+            padding: 25px;
+            background: rgba(201, 169, 97, 0.08);
+            border-radius: 8px;
+            border-left: 4px solid var(--color-gold);
+        }
+
+        .payment-details p {
+            margin: 12px 0;
+            font-size: 1.05rem;
             color: var(--color-charcoal);
-            line-height: 1.6;
+        }
+
+        .payment-details strong {
+            color: var(--color-gold);
+            font-weight: 600;
+        }
+
+        .payment-amount {
+            font-size: 2rem !important;
+            color: var(--color-gold) !important;
+            font-weight: 600 !important;
+            margin: 15px 0 !important;
+        }
+
+        .instruction-box {
+            background: rgba(255, 255, 255, 0.6);
+            border: 2px dashed var(--color-accent);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .instruction-box h4 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--color-charcoal);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .instruction-box ol {
+            margin-left: 20px;
+            color: var(--color-charcoal);
+            line-height: 2;
+        }
+
+        .instruction-box li {
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+
+        .whatsapp-icon {
+            display: inline-block;
+            margin-right: 8px;
+            font-size: 1.1rem;
         }
 
         .highlights-list {
@@ -548,6 +611,44 @@
             content: '✦ ';
             color: var(--color-gold);
             margin-right: 10px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .success-message {
+            display: none;
+            background: rgba(201, 169, 97, 0.1);
+            border: 3px solid var(--color-gold);
+            padding: 50px 40px;
+            text-align: center;
+            border-radius: 8px;
+            margin-top: 30px;
+            animation: fadeUp 0.5s ease;
+        }
+        
+        .success-message.show {
+            display: block;
+        }
+        
+        .success-message h3 {
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            color: var(--color-gold);
+            margin-bottom: 25px;
+        }
+        
+        .success-message p {
+            font-size: 1.15rem;
+            color: var(--color-charcoal);
+            line-height: 1.9;
+            margin: 15px 0;
+        }
+
+        .success-message .emoji {
+            font-size: 3rem;
+            margin: 20px 0;
         }
     </style>
 </head>
@@ -602,7 +703,8 @@
             </p>
         </div>
         
-        <div class="content-card">
+        <!-- BOOKING FORM -->
+        <div class="content-card" id="bookingFormCard">
             <h2 class="section-title">Book Your Spot</h2>
             
             <form id="bookingForm">
@@ -676,18 +778,74 @@
                     </div>
                 </div>
                 
-                <button type="submit" class="submit-btn">Proceed to Payment</button>
-                
-                <div class="success-message" id="successMessage">
-                    <h3>Redirecting to Payment...</h3>
-                    <p>Please complete the UPI payment to confirm your booking. We'll send confirmation and event details to your email. See you at Ti Amo! 💕</p>
-                </div>
+                <button type="submit" class="submit-btn" id="proceedBtn">Proceed to Payment</button>
             </form>
+        </div>
+
+        <!-- PAYMENT SECTION -->
+        <div class="content-card payment-section" id="paymentSection">
+            <h2 class="section-title">Complete Your Payment</h2>
+            
+            <div class="qr-code-container">
+                <h3 style="font-family: var(--font-display); font-size: 1.8rem; color: var(--color-charcoal); margin-bottom: 15px;">Scan QR Code to Pay</h3>
+                
+                <!-- QR CODE IMAGE -->
+                <img src="qr-code.jpeg" 
+                     alt="UPI QR Code - Scan to Pay" 
+                     class="qr-code-img" 
+                     id="qrCodeImage">
+                
+                <div class="payment-details">
+                    <p><strong>UPI ID:</strong> 6280252122@pthdfc</p>
+                    <p class="payment-amount">₹<span id="paymentAmount">650</span></p>
+                    <p><strong>Reference ID:</strong> 4d1t7a-01</p>
+                </div>
+            </div>
+
+            <div class="instruction-box">
+                <h4>📱 How to Complete Booking</h4>
+                <ol>
+                    <li><strong>Scan the QR code</strong> above using any UPI app (Google Pay, PhonePe, Paytm, etc.)</li>
+                    <li><strong>Pay the amount</strong> shown above</li>
+                    <li><strong>Take a screenshot</strong> of the payment confirmation</li>
+                    <li><strong>Click the WhatsApp button</strong> below to send the screenshot</li>
+                    <li>Send the screenshot on WhatsApp to <strong>confirm your booking</strong></li>
+                </ol>
+            </div>
+
+            <button type="button" class="submit-btn whatsapp-btn" id="whatsappBtn">
+                <span class="whatsapp-icon">💬</span> Send Screenshot on WhatsApp
+            </button>
+
+            <p style="text-align: center; margin-top: 20px; color: var(--color-accent); font-size: 0.9rem;">
+                After sending the screenshot, you'll receive confirmation within 24 hours
+            </p>
+        </div>
+
+        <!-- SUCCESS MESSAGE -->
+        <div class="content-card success-message" id="successMessage">
+            <div class="emoji">🎉</div>
+            <h3>Thank You!</h3>
+            <p style="margin-top: 25px;">Your booking details have been received.</p>
+            <p style="margin-top: 20px; font-size: 1.05rem;">
+                <strong>Next Step:</strong> Please send your payment screenshot on WhatsApp to complete the booking.
+            </p>
+            <p style="margin-top: 15px; color: var(--color-accent);">
+                We'll confirm your booking within 24 hours after payment verification.
+            </p>
+            <div style="margin-top: 35px; padding: 20px; background: rgba(201, 169, 97, 0.1); border-radius: 8px;">
+                <p style="font-size: 1.1rem; color: var(--color-gold);">
+                    <strong>WhatsApp Number:</strong> +91 6280252122
+                </p>
+            </div>
+            <p style="margin-top: 30px; font-size: 1rem;">
+                See you at Ti Amo on 14th February! 💕🎨
+            </p>
         </div>
         
         <footer>
             <div class="footer-text">
-                For inquiries, contact us at <strong>info@blessingsatelier.com</strong> or WhatsApp <strong>+91 62802 52122</strong>
+                For inquiries, contact us at <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="573438392336342317233e363a38793221323923">[email&#160;protected]</a></strong> or WhatsApp <strong>+91 6280252122</strong>
             </div>
             <div class="social-links">
                 <a href="#" onclick="return false;">Instagram</a>
@@ -700,8 +858,8 @@
         </footer>
     </div>
     
-    <script>
-        // Google Form Configuration
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        // Configuration
         const GOOGLE_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSdium6lRqcVKgtfFC67MFtkcZgPoAwWkeZbA_NLFov30Y_Eig/formResponse";
         
         const FORM_FIELDS = {
@@ -715,8 +873,11 @@
             partner2_phone: "entry.1096697800"
         };
         
-        // UPI Configuration
-        const UPI_ID = "6280252122@pthdfc";
+        const WHATSAPP_NUMBER = "916280252122"; // Without + or spaces
+        
+        let bookingData = null;
+        let selectedTicketType = null;
+        let paymentAmount = "650";
         
         // Handle ticket selection
         const soloTicket = document.getElementById('soloTicket');
@@ -726,20 +887,16 @@
         
         document.querySelectorAll('input[name="ticket"]').forEach(radio => {
             radio.addEventListener('change', function() {
-                // Remove selected class from all tickets
                 document.querySelectorAll('.ticket-option').forEach(opt => {
                     opt.classList.remove('selected');
                 });
                 
-                // Add selected class to chosen ticket
                 this.closest('.ticket-option').classList.add('selected');
                 
-                // Show/hide partner 2 section based on selection
                 if (this.value === 'couple') {
                     partner2Section.classList.add('show');
                     partner1Title.textContent = 'Partner 1 Details';
                     
-                    // Make partner 2 fields required
                     document.getElementById('name2').required = true;
                     document.getElementById('age2').required = true;
                     document.getElementById('email2').required = true;
@@ -748,7 +905,6 @@
                     partner2Section.classList.remove('show');
                     partner1Title.textContent = 'Your Details';
                     
-                    // Make partner 2 fields optional
                     document.getElementById('name2').required = false;
                     document.getElementById('age2').required = false;
                     document.getElementById('email2').required = false;
@@ -757,59 +913,84 @@
             });
         });
         
-        // Form submission handling
+        // Handle booking form submission
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Get form data
             const formData = new FormData(this);
-            const data = Object.fromEntries(formData);
+            bookingData = Object.fromEntries(formData);
+            selectedTicketType = bookingData.ticket;
             
-            // Determine ticket type and amount
-            const ticketType = data.ticket;
-            const amount = ticketType === 'couple' ? '1000' : '650';
+            console.log('Booking Data:', bookingData);
             
-            console.log('Booking Data:', data);
+            // IMMEDIATELY submit to Google Forms
+            submitToGoogleForms(bookingData, selectedTicketType);
             
-            // Show processing message
-            document.getElementById('successMessage').classList.add('show');
-            document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Update payment amount
+            paymentAmount = selectedTicketType === 'couple' ? '1000' : '650';
+            document.getElementById('paymentAmount').textContent = paymentAmount;
             
-            // Submit to Google Forms
-            submitToGoogleForms(data, ticketType);
+            // Hide booking form and show payment section
+            document.getElementById('bookingFormCard').classList.add('hidden');
+            document.getElementById('paymentSection').classList.add('show');
             
-            // Open UPI payment after short delay
+            // Scroll to payment section
             setTimeout(() => {
-                openUPIPayment(data, amount);
-            }, 800);
+                document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        });
+        
+        // Handle WhatsApp button click
+        document.getElementById('whatsappBtn').addEventListener('click', function() {
+            // Create WhatsApp message
+            const message = `*Ti Amo Booking - Payment Screenshot*\n\n` +
+                           `Name: ${bookingData.name1}\n` +
+                           `Ticket: ${selectedTicketType === 'couple' ? 'Couple' : 'Solo'}\n` +
+                           `Amount Paid: ₹${paymentAmount}\n` +
+                           `Reference: 4d1t7a-01\n\n` +
+                           `I'm sending the payment screenshot now.`;
+            
+            // Encode message for URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Create WhatsApp URL
+            const whatsappURL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
+            
+            // Open WhatsApp
+            window.open(whatsappURL, '_blank');
+            
+            // Show success message after short delay
+            setTimeout(() => {
+                document.getElementById('paymentSection').classList.remove('show');
+                document.getElementById('successMessage').classList.add('show');
+                document.getElementById('successMessage').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 1500);
         });
         
         // Function to submit booking data to Google Forms
         function submitToGoogleForms(data, ticketType) {
-            // Prepare form data
             const googleFormData = new URLSearchParams();
             
-            // Always send partner 1 data
+            // Partner 1 details (always present)
             googleFormData.append(FORM_FIELDS.partner1_name, data.name1);
             googleFormData.append(FORM_FIELDS.partner1_age, data.age1);
             googleFormData.append(FORM_FIELDS.partner1_email, data.email1);
             googleFormData.append(FORM_FIELDS.partner1_phone, data.phone1);
             
-            // Send partner 2 data only if couple ticket
+            // Partner 2 details (N/A for solo tickets, actual data for couple tickets)
             if (ticketType === 'couple') {
-                googleFormData.append(FORM_FIELDS.partner2_name, data.name2 || '');
-                googleFormData.append(FORM_FIELDS.partner2_age, data.age2 || '');
-                googleFormData.append(FORM_FIELDS.partner2_email, data.email2 || '');
-                googleFormData.append(FORM_FIELDS.partner2_phone, data.phone2 || '');
+                googleFormData.append(FORM_FIELDS.partner2_name, data.name2 || 'N/A');
+                googleFormData.append(FORM_FIELDS.partner2_age, data.age2 || 'N/A');
+                googleFormData.append(FORM_FIELDS.partner2_email, data.email2 || 'N/A');
+                googleFormData.append(FORM_FIELDS.partner2_phone, data.phone2 || 'N/A');
             } else {
-                // Send empty values for solo ticket
-                googleFormData.append(FORM_FIELDS.partner2_name, '');
-                googleFormData.append(FORM_FIELDS.partner2_age, '');
-                googleFormData.append(FORM_FIELDS.partner2_email, '');
-                googleFormData.append(FORM_FIELDS.partner2_phone, '');
+                // For solo tickets, send N/A for all Partner 2 fields
+                googleFormData.append(FORM_FIELDS.partner2_name, 'N/A');
+                googleFormData.append(FORM_FIELDS.partner2_age, 'N/A');
+                googleFormData.append(FORM_FIELDS.partner2_email, 'N/A');
+                googleFormData.append(FORM_FIELDS.partner2_phone, 'N/A');
             }
             
-            // Submit to Google Forms
             fetch(GOOGLE_FORM_URL, {
                 method: 'POST',
                 mode: 'no-cors',
@@ -818,30 +999,51 @@
                 },
                 body: googleFormData
             }).then(() => {
-                console.log('✅ Booking submitted to Google Forms successfully');
+                console.log('✅ Booking data submitted to Google Forms successfully');
             }).catch((error) => {
-                console.log('ℹ️ Form submission attempted:', error);
+                console.log('Form submission attempted:', error);
             });
         }
-        
-        // Function to open UPI payment
-        function openUPIPayment(data, amount) {
-            const merchantName = "TiAmo";
-            const transactionNote = `TiAmo-${data.name1.split(' ')[0]}-4d1t7a-01`;
-            
-            // Create UPI payment link
-            const upiLink = `upi://pay?pa=${UPI_ID}&pn=${merchantName}&am=${amount}&cu=INR&tn=${transactionNote}`;
-            
-            // Try to open UPI payment app
-            window.location.href = upiLink;
-            
-            // Fallback message for desktop users
-            setTimeout(() => {
-                if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-                    alert(`📱 Payment Details:\n\nUPI ID: ${UPI_ID}\nAmount: ₹${amount}\nReference: 4d1t7a-01\n\nPlease complete the payment using any UPI app.\nAfter payment, you'll receive confirmation via email within 24 hours!`);
-                }
-            }, 2000);
-        }
     </script>
-</body>
-</html>
+
+    <!-- 
+    ==========================================
+    HOW TO ADD YOUR QR CODE IMAGE
+    ==========================================
+    
+    Find line 831 where it says:
+    <img src="data:image/svg+xml..." 
+    
+    Replace it with ONE of these options:
+    
+    ==========================================
+    OPTION 1: Upload QR to Same GitHub Repo (EASIEST)
+    ==========================================
+    1. Upload your QR code image to GitHub repository
+    2. Name it: qr-code.png or qr-code.jpg
+    3. Replace line 831 with:
+       <img src="qr-code.png" 
+    
+    OR if you put it in a folder called "images":
+       <img src="images/qr-code.png"
+    
+    ==========================================
+    OPTION 2: Upload to Imgur (FREE, NO ACCOUNT NEEDED)
+    ==========================================
+    1. Go to https://imgur.com
+    2. Click "New post"
+    3. Upload your QR code image
+    4. Right-click the uploaded image
+    5. Select "Copy image address"
+    6. Replace line 831 with:
+       <img src="PASTE_IMGUR_URL_HERE"
+    
+    Example:
+       <img src="https://i.imgur.com/abc123.png"
+    
+    ==========================================
+    OPTION 3: Base64 Encoding (Works Offline)
+    ==========================================
+    1. Go to https://www.base64-image.de/
+    2. Upload your QR code
+    3. Click "Copy image" or copy the base64 c
