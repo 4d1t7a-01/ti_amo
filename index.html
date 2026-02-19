@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ti Amo - Art Therapy at Sunder Nursery</title>
+    <title>Art Con - Holi Celebration at Sunder Nursery</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --color-cream: #FAF8F3;
+            --color-cream: #FFF9E6;
             --color-charcoal: #2A2A2A;
-            --color-gold: #C9A961;
-            --color-gold-light: #E5D4A7;
-            --color-accent: #8B7355;
+            --color-gold: #FF6B9D;
+            --color-gold-light: #FFB3D9;
+            --color-accent: #9B59B6;
+            --color-holi-orange: #FF8C42;
+            --color-holi-green: #4CAF50;
+            --color-holi-blue: #00BCD4;
+            --color-holi-yellow: #FFD700;
             --font-display: 'Cormorant Garamond', serif;
             --font-body: 'Montserrat', sans-serif;
         }
@@ -40,9 +44,10 @@
             height: 100%;
             z-index: -1;
             background: 
-                radial-gradient(ellipse at 20% 30%, rgba(201, 169, 97, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 70%, rgba(139, 115, 85, 0.1) 0%, transparent 50%),
-                linear-gradient(135deg, var(--color-cream) 0%, #FBF6ED 100%);
+                radial-gradient(ellipse at 20% 30%, rgba(255, 107, 157, 0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(76, 175, 80, 0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(0, 188, 212, 0.1) 0%, transparent 50%),
+                linear-gradient(135deg, var(--color-cream) 0%, #FFFBF0 100%);
             animation: gradientShift 15s ease infinite;
         }
         
@@ -213,8 +218,13 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, transparent, var(--color-gold), transparent);
-            opacity: 0.5;
+            background: linear-gradient(90deg, 
+                var(--color-holi-orange), 
+                var(--color-gold), 
+                var(--color-holi-blue), 
+                var(--color-holi-green), 
+                var(--color-holi-yellow));
+            opacity: 0.7;
         }
         
         .section-title {
@@ -562,7 +572,7 @@
 
         .instruction-box {
             background: rgba(255, 255, 255, 0.6);
-            border: 2px dashed var(--color-accent);
+            border: 2px dashed var(--color-gold);
             border-radius: 8px;
             padding: 25px;
             margin: 30px 0;
@@ -670,51 +680,15 @@
         <div class="deco-line top"></div>
         
         <header>
-            <div class="event-year">Valentine's Day Special</div>
-            <h1>Ti Amo</h1>
-            <div class="event-subtitle">Art Therapy at Sunder Nursery</div>
-            <div class="event-date-location">14th February 2026 • 1:00 PM - 4:00 PM • Sunder Nursery, Delhi</div>
+            <div class="event-year">Holi Special 2026</div>
+            <h1>Art Con</h1>
+            <div class="event-subtitle">Holi Celebration at Sunder Nursery</div>
+            <div class="event-date-location">28th February 2026 • 1:00 PM - 4:00 PM • Sunder Nursery, Delhi</div>
         </header>
         
         <div class="divider"></div>
         
-        <div class="content-card">
-            <h2 class="section-title">About the Event</h2>
-            <p class="event-description">
-                Join us at the beautiful Sunder Nursery, Delhi, for a soulful art therapy session designed to help you relax, create, and connect — with yourself and others — through art with freebies and fun surprise awaits!!
-            </p>
-            
-            <ul class="highlights-list">
-                <li>Guided art activities</li>
-                <li>Peaceful outdoor setting</li>
-                <li>Creative expression & mindful relaxation</li>
-                <li>Perfect for couples, friends, or solo participants</li>
-            </ul>
-            
-            <div class="event-details">
-                <div class="detail-item">
-                    <div class="detail-icon">📅</div>
-                    <div class="detail-label">Date</div>
-                    <div class="detail-value">14th Feb 2026</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-icon">🕐</div>
-                    <div class="detail-label">Time</div>
-                    <div class="detail-value">1:00 PM - 4:00 PM</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-icon">📍</div>
-                    <div class="detail-label">Venue</div>
-                    <div class="detail-value">Sunder Nursery</div>
-                </div>
-            </div>
-            
-            <p style="text-align: center; font-size: 0.9rem; color: var(--color-accent); margin-top: 30px; font-weight: 500; letter-spacing: 1px;">
-                ⚠️ Limited seats available — Reserve your spot now!
-            </p>
-        </div>
-        
-        <!-- BOOKING FORM -->
+        <!-- BOOKING FORM - NOW AT TOP -->
         <div class="content-card" id="bookingFormCard">
             <h2 class="section-title">Book Your Spot</h2>
             
@@ -801,7 +775,7 @@
                 <h3 style="font-family: var(--font-display); font-size: 1.8rem; color: var(--color-charcoal); margin-bottom: 15px;">Scan QR Code to Pay</h3>
                 
                 <!-- QR CODE IMAGE -->
-                <img src="qr-code.jpg" 
+                <img src="qr-code.jpeg" 
                      alt="UPI QR Code - Scan to Pay" 
                      class="qr-code-img" 
                      id="qrCodeImage">
@@ -844,19 +818,56 @@
             <p style="margin-top: 15px; color: var(--color-accent);">
                 We'll confirm your booking within 24 hours after payment verification.
             </p>
-            <div style="margin-top: 35px; padding: 20px; background: rgba(201, 169, 97, 0.1); border-radius: 8px;">
+            <div style="margin-top: 35px; padding: 20px; background: rgba(255, 107, 157, 0.1); border-radius: 8px;">
                 <p style="font-size: 1.1rem; color: var(--color-gold);">
                     <strong>WhatsApp Number:</strong> +91 6280252122
                 </p>
             </div>
             <p style="margin-top: 30px; font-size: 1rem;">
-                See you at Ti Amo on 14th February! 💕🎨
+                See you at Art Con on 28th February! 🎨🌈
+            </p>
+        </div>
+        
+        <!-- EVENT INFORMATION - NOW AT BOTTOM -->
+        <div class="content-card">
+            <h2 class="section-title">About the Event</h2>
+            <p class="event-description">
+                Join us at the beautiful Sunder Nursery, Delhi, for a vibrant Holi celebration with art, colors, music, and joy! Experience the festival of colors with creative art activities, organic colors, and a celebration of spring with freebies and fun surprises awaiting!!
+            </p>
+            
+            <ul class="highlights-list">
+                <li>Organic color play & art activities</li>
+                <li>Live music and festive atmosphere</li>
+                <li>Creative expression & joyful celebration</li>
+                <li>Perfect for friends, families, or solo participants</li>
+            </ul>
+            
+            <div class="event-details">
+                <div class="detail-item">
+                    <div class="detail-icon">📅</div>
+                    <div class="detail-label">Date</div>
+                    <div class="detail-value">28th Feb 2026</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-icon">🕐</div>
+                    <div class="detail-label">Time</div>
+                    <div class="detail-value">1:00 PM - 4:00 PM</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-icon">📍</div>
+                    <div class="detail-label">Venue</div>
+                    <div class="detail-value">Sunder Nursery</div>
+                </div>
+            </div>
+            
+            <p style="text-align: center; font-size: 0.9rem; color: var(--color-accent); margin-top: 30px; font-weight: 500; letter-spacing: 1px;">
+                ⚠️ Limited seats available — Reserve your spot now!
             </p>
         </div>
         
         <footer>
             <div class="footer-text">
-                For inquiries, contact us at <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="573438392336342317233e363a38793221323923">[email&#160;protected]</a></strong> or WhatsApp <strong>+91 6280252122</strong>
+                For inquiries, contact us at <strong>contact@artcon.event</strong> or WhatsApp <strong>+91 6280252122</strong>
             </div>
             <div class="social-links">
                 <a href="#" onclick="return false;">Instagram</a>
@@ -864,7 +875,7 @@
                 <a href="#" onclick="return false;">Twitter</a>
             </div>
             <div style="margin-top: 30px; font-size: 0.7rem; opacity: 0.6;">
-                © 2026 Ti Amo Event. Presented by Blessings Atelier.
+                © 2026 Art Con Event. Presented by Blessings Atelier.
             </div>
         </footer>
     </div>
@@ -972,7 +983,7 @@
         // Handle WhatsApp button click
         document.getElementById('whatsappBtn').addEventListener('click', function() {
             // Create WhatsApp message
-            const message = `*Ti Amo Booking - Payment Screenshot*\n\n` +
+            const message = `*Art Con Booking - Payment Screenshot*\n\n` +
                            `Name: ${bookingData.name1}\n` +
                            `Ticket: ${selectedTicketType === 'couple' ? 'Couple' : 'Solo'}\n` +
                            `Amount Paid: ₹${paymentAmount}\n` +
